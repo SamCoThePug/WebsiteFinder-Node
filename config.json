@@ -1,0 +1,4 @@
+{
+  "token": "Discord bot token",
+  "channelid": "Channel ID for scans to be sent to"
+}
