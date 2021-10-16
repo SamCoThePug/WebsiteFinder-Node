@@ -27,9 +27,13 @@ async function scan() {
                 await browser.close();
                 axios.get("https://extreme-ip-lookup.com/json/"+ip).then(async iplk => {
                     const file = new Discord.MessageAttachment("screenshot.png");
+                    let software = "Unknown"
+                    if(resp.data.includes(`<a href="https://www.whmcs.com/" target="_blank">WHMCompleteSolution</a>`)) software = "WHMCS";
+                    if(resp.headers['x-powered-by'] == 'Express') software = "ExpressJS";
+                    if(resp.headers['server'] == 'cloudflare') software = "Cloudflare";
                     let emb = new Discord.MessageEmbed()
                         .setTitle("Website Found!")
-                        .setDescription("**IP:** "+ip+"\n**Host:** "+iplk.data.isp+"\n**City:** "+iplk.data.city+", "+iplk.data.region+" "+iplk.data.countryCode+"\n**Title:** "+parseTitle(resp.data))
+                        .setDescription("**IP:** "+ip+"\n**Host:** "+iplk.data.isp+"\n**City:** "+iplk.data.city+", "+iplk.data.region+" "+iplk.data.countryCode+"\n**Title:** "+parseTitle(resp.data)+"\n**Software:** "+software)
                         .setColor("GREEN")
                         .attachFiles(file)
                         .setImage('attachment://screenshot.png')
